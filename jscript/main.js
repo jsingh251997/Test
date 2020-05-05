@@ -1,42 +1,58 @@
-var BoxLength = document.getElementById("BoxLen")
-var BoxWidth = document.getElementById("BoxWid")
-var BagLength = document.getElementById("BagLen")
-var BagWidth = document.getElementById("BagWid")
-var Gusset = document.getElementById("Gusset")
+/***************Draggable OBJECT*********/
+dragElement(document.getElementById("mydiv"));
 
-var cols = 10;
-var rows = 10;
-
-var colors = [];
-
-function make2Darray(cols, rows) {
-  var arr = new Array(cols);
-  for (var i = 0; i < arr.length; i++) {
-    arr[i] = new Array(rows);
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
   }
-  return arr;
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
 }
 
-function setup() {
-  createCanvas(300, 300);
-  colors = make2Darray(cols, rows);
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
-      colors[i][j] = (255);
-    }
-  }
-}
+/************CREATING A GRID*************/
+const container = document.getElementById("container");
 
-function draw() {
-  background(51);
+function makeRows(rows, cols) {
+  container.style.setProperty('--grid-rows', rows);
+  container.style.setProperty('--grid-cols', cols);
+  for (c = 0; c < (rows * cols); c++) {
+    let cell = document.createElement("div");
+    cell.innerText = (c + 1);
+    container.appendChild(cell).className = "grid-item";
+  };
+};
 
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
-      var x = i * 30;
-      var y = j * 30;
-      fill(colors[i][j]);
-      stroke(0);
-      rect(x, y, 30, 30);
-    }
-  }
-}
+makeRows(8, 8);
