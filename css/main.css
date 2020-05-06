@@ -10,6 +10,7 @@
   #mydivheader {
     padding: 10px;
     cursor: move;
+    height: 150px;
     z-index: 10;
     background-color: #2196F3;
     color: #fff;
@@ -26,6 +27,8 @@
     display: grid;
     grid-template-rows: repeat(var(--grid-rows), 1fr);
     grid-template-columns: repeat(var(--grid-cols), 1fr);
+    height: 20px;
+    width: 20px;
   }
   
   .grid-item {
@@ -33,3 +36,10 @@
     border: 1px solid #ddd;
     text-align: center;
   }
+
+
+
+  /*TEST*/
+  canvas {
+    border: 1px solid #ccc;
+}

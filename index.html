@@ -6,6 +6,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
+
+
 <body>
     <div class="Top">
         <h1>Polytex Bag Pattern Design</h1>
@@ -14,7 +16,10 @@
             <select name="Pattern"></select>
         </div>
     </div>
+
+
     <div class="Dimensions">
+
         <section class="Box_Dim">
             <form action="">
                 <p>Box Dimensions</p>
@@ -24,6 +29,7 @@
                 <input type="text" name="BoxWid" id="BoxWid">
             </form>
         </section>
+
         <section class="Bag_Dim">
             <form action="">
                 <p>Bag Dimensions</p>
@@ -34,20 +40,26 @@
                 <label for="Gusset">Gusset</label>
                 <input type="text" name="Gusset" id="Gusset">
             </form>
-
         </section>
+
         <input class ="btn" type="submit" value="Submit">
     </div>
+
+
    <!-- Draggable DIV -->
 <div id="mydiv">
-    <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
     <div id="mydivheader">Click here to move</div>
-    <p>Move</p>
-    <p>this</p>
-    <p>DIV</p>
-  </div>
+</div>
+
+
+
   <!-- Grid DIV -->
   <div id = "container"></div>
+
+
+  <!-- TEST-->
+  <canvas id="c" width="600" height="600"></canvas>
+  <script src="https://rawgit.com/kangax/fabric.js/master/dist/fabric.js"></script>
   <script src="/jscript/main.js"></script>
 </body>
 </html>

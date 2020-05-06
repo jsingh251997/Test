@@ -43,7 +43,7 @@ function dragElement(elmnt) {
 }
 
 /************CREATING A GRID*************/
-const container = document.getElementById("container");
+/*const container = document.getElementById("container");
 
 function makeRows(rows, cols) {
   container.style.setProperty('--grid-rows', rows);
@@ -55,4 +55,42 @@ function makeRows(rows, cols) {
   };
 };
 
-makeRows(8, 8);
+makeRows(8, 8);*/
+
+
+
+
+
+
+/*TEST*/
+var canvas = new fabric.Canvas('c', { selection: false });
+var grid = 50;
+
+// create grid
+
+for (var i = 0; i < (600 / grid); i++) {
+  canvas.add(new fabric.Line([ i * grid, 0, i * grid, 600], { stroke: '#ccc', selectable: false }));
+  canvas.add(new fabric.Line([ 0, i * grid, 600, i * grid], { stroke: '#ccc', selectable: false }))
+}
+
+// add objects
+
+canvas.add(new fabric.Rect({ 
+  left: 100, 
+  top: 100, 
+  width: 200, 
+  height: 250, 
+  fill: '#faa', 
+  originX: 'left', 
+  originY: 'top',
+  centeredRotation: true
+}));
+
+// snap to grid
+
+canvas.on('object:moving', function(options) { 
+  options.target.set({
+    left: Math.round(options.target.left / grid) * grid,
+    top: Math.round(options.target.top / grid) * grid
+  });
+});
