@@ -1,4 +1,4 @@
-/*Draggable Box*/
+/*Draggable Box
 #mydiv {
     position: absolute;
     z-index: 9;
@@ -14,7 +14,7 @@
     z-index: 10;
     background-color: #2196F3;
     color: #fff;
-  }
+  }*/
 
 
   /*Grid Div*/
@@ -36,10 +36,3 @@
     border: 1px solid #ddd;
     text-align: center;
   }
-
-
-
-  /*TEST*/
-  canvas {
-    border: 1px solid #ccc;
-}

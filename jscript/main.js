@@ -1,5 +1,5 @@
 /***************Draggable OBJECT*********/
-dragElement(document.getElementById("mydiv"));
+/*dragElement(document.getElementById("mydiv"));
 
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -42,25 +42,8 @@ function dragElement(elmnt) {
   }
 }
 
-/************CREATING A GRID*************/
-/*const container = document.getElementById("container");
 
-function makeRows(rows, cols) {
-  container.style.setProperty('--grid-rows', rows);
-  container.style.setProperty('--grid-cols', cols);
-  for (c = 0; c < (rows * cols); c++) {
-    let cell = document.createElement("div");
-    cell.innerText = (c + 1);
-    container.appendChild(cell).className = "grid-item";
-  };
-};
-
-makeRows(8, 8);*/
-
-
-
-
-
+*/
 
 /*TEST*/
 var canvas = new fabric.Canvas('c', { selection: false });
@@ -80,10 +63,12 @@ canvas.add(new fabric.Rect({
   top: 100, 
   width: 200, 
   height: 250, 
-  fill: '#faa', 
+  fill: '#faa',
+  stroke:  'black',
   originX: 'left', 
   originY: 'top',
   centeredRotation: true
+  
 }));
 
 // snap to grid
@@ -94,3 +79,32 @@ canvas.on('object:moving', function(options) {
     top: Math.round(options.target.top / grid) * grid
   });
 });
+
+
+document.onmousedown = mouseDown;
+
+function mouseDown(ev) {
+ console.log("MOUSE PRESSED");
+ copy();
+ paste();
+}
+
+
+function copy(){
+    if(canvas.getActiveObject()){
+        var object = fabric.util.object.clone(canvas.getActiveObject());
+        object.set("top", object.top+5);
+        object.set("left", object.left+5);
+        copiedObject = object;
+        copiedObjects = new Array();
+    }
+}
+
+function paste(){
+    canvas.add(copiedObject.set({
+      left: Math.round(copiedObject.left / grid) * grid,
+      top: Math.round(copiedObject.top / grid) * grid
+    }));
+    canvas.renderAll();    
+}
+
