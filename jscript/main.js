@@ -45,24 +45,24 @@ function dragElement(elmnt) {
 
 */
 
-/*TEST*/
+
 var canvas = new fabric.Canvas('c', { selection: false });
-var grid = 50;
+var grid = 25;
 
 // create grid
 
 for (var i = 0; i < (600 / grid); i++) {
-  canvas.add(new fabric.Line([ i * grid, 0, i * grid, 600], { stroke: '#ccc', selectable: false }));
-  canvas.add(new fabric.Line([ 0, i * grid, 600, i * grid], { stroke: '#ccc', selectable: false }))
+  canvas.add(new fabric.Line([ i * grid, 0, i * grid, 675], { stroke: '#ccc', selectable: false }));
+  canvas.add(new fabric.Line([ 0, i * grid, 575, i * grid], { stroke: '#ccc', selectable: false }))
 }
 
 // add objects
 
 canvas.add(new fabric.Rect({ 
-  left: 100, 
-  top: 100, 
-  width: 200, 
-  height: 250, 
+  left: 50, 
+  top: 50, 
+  width: 175, 
+  height: 225, 
   fill: '#faa',
   stroke:  'black',
   originX: 'left', 
@@ -70,6 +70,9 @@ canvas.add(new fabric.Rect({
   centeredRotation: true
   
 }));
+
+
+
 
 // snap to grid
 
@@ -79,6 +82,7 @@ canvas.on('object:moving', function(options) {
     top: Math.round(options.target.top / grid) * grid
   });
 });
+
 
 
 document.onmousedown = mouseDown;
