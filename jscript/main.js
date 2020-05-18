@@ -1,51 +1,3 @@
-/***************Draggable OBJECT*********/
-/*dragElement(document.getElementById("mydiv"));
-
-function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(elmnt.id + "header")) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-  } else {
-    // otherwise, move the DIV from anywhere inside the DIV:
-    elmnt.onmousedown = dragMouseDown;
-  }
-
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
-
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
-
-  function closeDragElement() {
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
-
-
-*/
-
-
 var canvas = new fabric.Canvas('c', { selection: false });
 var grid = 25;
 
@@ -56,12 +8,10 @@ for (var i = 0; i < (600 / grid); i++) {
   canvas.add(new fabric.Line([ 0, i * grid, 575, i * grid], { stroke: '#ccc', selectable: false }))
 }
 
-// add objects
-
-canvas.add(new fabric.Rect({ 
+var rect1 = new fabric.Rect({ 
   left: 50, 
   top: 50, 
-  width: 175, 
+  width: 125, 
   height: 225, 
   fill: '#faa',
   stroke:  'black',
@@ -69,7 +19,43 @@ canvas.add(new fabric.Rect({
   originY: 'top',
   centeredRotation: true
   
-}));
+});
+canvas.add(rect1);
+
+
+var rotPos = 0;
+document.getElementById("0").onclick = function() {rotate0()};
+function rotate0() {
+  rect1.set('angle', 0);
+  console.log(rect1.get('angle'));
+  canvas.renderAll();
+  rotPos = 1;
+  RectArray();
+}
+document.getElementById("90").onclick = function() {rotate90()};
+function rotate90() {
+  rect1.set('angle', 90);
+  console.log(rect1.get('angle'));
+  canvas.renderAll();
+  rotPos = 2;
+  RectArray();
+}
+document.getElementById("180").onclick = function() {rotate180()};
+function rotate180() {
+  rect1.set('angle', 180);
+  console.log(rect1.get('angle'));
+  canvas.renderAll();
+  rotPos = 3;
+  RectArray();
+}
+document.getElementById("270").onclick = function() {rotate270()};
+function rotate270() {
+  rect1.set('angle', 270);
+  console.log(rect1.get('angle'));
+  canvas.renderAll();
+  rotPos = 4;
+  RectArray();
+}
 
 
 
@@ -86,12 +72,19 @@ canvas.on('object:moving', function(options) {
 
 
 document.onmousedown = mouseDown;
-
+document.onmouseup = mouseUp;
 function mouseDown(ev) {
- console.log("MOUSE PRESSED");
+ if(canvas.getActiveObject()){
+ console.log("MOUSE DOWN");
  copy();
- paste();
+ }
 }
+function mouseUp(ev) {
+  if(canvas.getActiveObject()){
+  console.log("MOUSE UP");
+  paste();
+  }
+ }
 
 
 function copy(){
@@ -100,7 +93,7 @@ function copy(){
         object.set("top", object.top+5);
         object.set("left", object.left+5);
         copiedObject = object;
-        copiedObjects = new Array();
+
     }
 }
 
@@ -109,6 +102,45 @@ function paste(){
       left: Math.round(copiedObject.left / grid) * grid,
       top: Math.round(copiedObject.top / grid) * grid
     }));
-    canvas.renderAll();    
+    copiedObject = canvas.getActiveObject();
+    var leftCoord = copiedObject.left;
+    var topCoord = copiedObject.top;
+    console.log("Rect 1: ", leftCoord, topCoord);
+  //  calcArray[leftCoord][topCoord];
+  // canvas.discardActiveObject();
+    canvas.renderAll();
+
 }
 
+
+var RectPos = [[],[]];
+function RectArray(){
+const RectPos1 = [[4,2,2,4], [4,2,2,4], [4,2,2,4], [4,2,2,4], [4,2,2,4], [8,4,4,8]];
+const RectPos2 = [[8,4,4,4,4,4],[4,2,2,2,2,2],[4,2,2,2,2,2],[8,4,4,4,4,4]];
+const RectPos3 = [[4,4,4,4,4,8],[2,2,2,2,2,4],[2,2,2,2,2,4],[4,4,4,4,4,8]];
+const RectPos4 = [[8,4,4,8], [4,2,2,4], [4,2,2,4], [4,2,2,4], [4,2,2,4], [4,2,2,4]];
+if(rotPos == 1){
+  RectPos = RectPos1;
+}
+else if (rotPos == 2) {
+  RectPos = RectPos2;
+}
+else if (rotPos == 3){
+  RectPos = RectPos3;
+}
+else {
+  RectPos = RectPos4;
+}
+
+console.log(RectPos);
+console.log(RectPos.length, RectPos[0].length);
+}
+
+/*function calcArray(leftCoord, topCoord){
+var BoxArray = [[],[]];
+for(var x = 0; x < RectPos[0].length; x++){
+  for(var y = 0; y < RectPos.length; y++){
+    BoxArray[x][y] = BoxArray[x][y] + RectPos[x][y];
+  }
+}
+}*/
